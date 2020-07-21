@@ -5,6 +5,8 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ManifestPlugin = require("webpack-manifest-plugin");
 const HappyPackPlugin = require("./happypack.plugin");
 
+const vueLoaderPlugin = require('vue-loader/lib/plugin')
+
 const utils = require("./utils");
 const config = require("./index");
 const vueLoaderConfig = require("./vue-loader.conf");
@@ -71,7 +73,7 @@ module.exports = {
       {
         test: /\.vue$/,
         loader: "vue-loader",
-        options: vueLoaderConfig
+        // options: vueLoaderConfig
         // use: 'happypack/loader?id=vue'
       },
       {
@@ -149,14 +151,15 @@ module.exports = {
     new HtmlWebpackPlugin({
       filename: "index.html",
       template: "./public/index.html", //resolve('/public/index.html'),
-      title: "Vue App webpack template for PC",
+      // title: "Vue App webpack template for PC",
       inject: true,
       hash: true,
       cache: true,
       // chunks: ['main', 'vendors'],
       chunksSortMode: "dependency",
       favicon: utils.resolve("public/static/images/favicon.ico")
-    })
+    }),
+    new vueLoaderPlugin(),
     // ...HappyPackPlugin
   ],
 

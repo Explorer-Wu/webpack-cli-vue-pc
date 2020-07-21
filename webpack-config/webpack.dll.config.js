@@ -6,6 +6,7 @@ const ManifestPlugin = require('webpack-manifest-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const HappyPackPlugin = require('./happypack.plugin');
+const vueLoaderPlugin = require('vue-loader/lib/plugin')
 let utils = require('./utils')
 // let config = require('./index')
 
@@ -24,7 +25,7 @@ module.exports = {
             'vuex',
             'vuex-router-sync',
             'axios',
-            'lodash',
+            // 'lodash',
             'immer',
             // 'iview',
         ]
@@ -44,9 +45,9 @@ module.exports = {
             { parser: { requireEnsure: false } },
             {
                 test: /\.vue$/,
-                // loader: 'vue-loader',
+                loader: 'vue-loader',
                 // options: vueLoaderConfig
-                loader: 'happypack/loader?id=vue'
+                // loader: 'happypack/loader?id=vue'
             },
             {
                 test: /\.(js|jsx)$/,
@@ -55,8 +56,8 @@ module.exports = {
                     utils.resolve('src'),
                     utils.resolve('test'),
                 ],
-                // loader: 'babel-loader',
-                use: 'happypack/loader?id=babel'
+                loader: 'babel-loader',
+                // use: 'happypack/loader?id=babel'
             },
             // {
             //     test: /\.(css|less|stylus)$/,
@@ -119,6 +120,7 @@ module.exports = {
             path: utils.resolve('libs/[name]-dll-manifest.json'),
             name: '[name]_dll_[hash]',
         }),
+        new vueLoaderPlugin(),
         // ...HappyPackPlugin
     ],
 };
